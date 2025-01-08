@@ -144,6 +144,24 @@ define Device/hpe_1920-24g
 endef
 TARGET_DEVICES += hpe_1920-24g
 
+define Device/hpe_1920-24g-poe-180w
+  $(Device/hpe_1920)
+  SOC := rtl8382
+  DEVICE_MODEL := 1920-24G-PoE+ 180W (JG925A)
+  DEVICE_PACKAGES += realtek-poe
+  H3C_DEVICE_ID := 0x00010028
+endef
+TARGET_DEVICES += hpe_1920-24g-poe-180w
+
+define Device/hpe_1920-24g-poe-370w
+  $(Device/hpe_1920)
+  SOC := rtl8382
+  DEVICE_MODEL := 1920-24G-PoE+ 370W (JG926A)
+  DEVICE_PACKAGES += realtek-poe
+  H3C_DEVICE_ID := 0x00010029
+endef
+TARGET_DEVICES += hpe_1920-24g-poe-370w
+
 define Device/inaba_aml2-17gp
   SOC := rtl8382
   IMAGE_SIZE := 13504k
@@ -161,6 +179,27 @@ define Device/iodata_bsh-g24mb
   UIMAGE_MAGIC := 0x83800013
 endef
 TARGET_DEVICES += iodata_bsh-g24mb
+
+define Device/linksys_lgs310c
+  SOC := rtl8380
+  IMAGE_SIZE := 13504k
+  DEVICE_VENDOR := Linksys
+  DEVICE_MODEL := LGS310C
+  BELKIN_MODEL := BKS-RTL83xx
+  BELKIN_HEADER := 0x07800001
+  LINKSYS_MODEL := 60402060
+  IMAGES += factory.imag
+  IMAGE/factory.imag := \
+	append-kernel | \
+	pad-to 64k | \
+	append-rootfs | \
+	pad-rootfs | \
+	check-size | \
+	append-metadata | \
+	linksys-image | \
+	belkin-header
+endef
+TARGET_DEVICES += linksys_lgs310c
 
 # "NGE" refers to the uImage magic
 define Device/netgear_nge
